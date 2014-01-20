@@ -13,6 +13,7 @@
 
 import read_write as rw
 import os
+import sys
 
 pinyin_db=r'convert-utf-8.txt'
 phone_db=r'PHONE.txt'
