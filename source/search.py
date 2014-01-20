@@ -77,7 +77,7 @@ def get_key():
         sys.argv=sys.argv[0]
     else:
         key_word=input(">> ")
-        tmp=os.system('cls')
+        tmp=os.system('clear')
     if (key_word=='exit'):
         os._exit(0)
     return key_word
