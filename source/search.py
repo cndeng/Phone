@@ -1,3 +1,5 @@
+#!/opt/python3/bin/python3
+
 #-------------------------------------------------------------------------------
 # Name:        search phone num
 # Purpose:     search phone num by pinyin
@@ -20,7 +22,13 @@ def is_chinese(uchar):
         return True
     else:
         return False
-
+def has_chinese(ustring):
+    for c in ustring:
+        if(is_chinese(c)):
+            return True
+        else:
+            return False
+        
 def load_db():
     pinyin_list=rw.read2memory(pinyin_db).split('\n')
     pinyin_dic={}
@@ -46,27 +54,38 @@ def load_db():
     #print(len(p2),len(phone_list))
     return phone_list,p2
 
-def search(phone_list,pinyin_list):
-    key=""
-    while(len(key)==0):
-        key=input(">> ")
+def search(phone_list,pinyin_list,key):
     index=0
-    for pinyin in pinyin_list:
-        if (pinyin.__contains__(key)):
-            print(phone_list[index])
-        index += 1
-    for phone in phone_list:
-        if (phone.__contains__(key)):
-            print(phone)
+    if not has_chinese(key):
+        for pinyin in pinyin_list:
+            if (pinyin.__contains__(key)):
+                print(phone_list[index])
+            index += 1
+    else:
+        for phone in phone_list:
+            if (phone.__contains__(key)):
+                print(phone)
     pass
 
+def get_key():
+    if len(sys.argv)>1:
+        try:
+            key_word=sys.argv[1]+" "+sys.argv[2]
+        except:
+            key_word=sys.argv[1]
+        sys.argv=sys.argv[0]
+    else:
+        key_word=input(">> ")
+        tmp=os.system('cls')
+    if (key_word=='exit'):
+        os._exit(0)
+    return key_word
 
 def main():
     db=load_db()
     while(1>0):
-        search(db[0],db[1])
-        input("\n\n\tPress Enter Search Again")
-        tmp=os.system('cls')
+        key=get_key()
+        search(db[0],db[1],key)
     pass
 
 if __name__ == '__main__':
